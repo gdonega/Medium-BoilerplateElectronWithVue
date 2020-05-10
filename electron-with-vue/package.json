@@ -1,0 +1,14 @@
+{
+  "name": "electron-with-vue",
+  "version": "1.0.0",
+  "description": "A base Electron project using Vue.js",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "gdonega",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.2.5"
+  }
+}
