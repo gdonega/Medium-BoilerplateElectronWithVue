@@ -2,7 +2,7 @@
   "name": "electron-with-vue",
   "version": "1.0.0",
   "description": "A base Electron project using Vue.js",
-  "main": "main.js",
+  "main": "app.main.js",
   "scripts": {
     "start": "electron ."
   },
