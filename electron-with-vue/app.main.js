@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require('electron')
+const port = 40992; // Deve ser a mesma porta do Servidor Vue.js (webpack de desenvolvimento): no arquivo que está em app/config/vue/webpacks/dev.js (partindo da raiz do projeto)
+const selfHost = `http://localhost:${port}`;
 
 function createWindow () {
   // Cria uma janela de navegação.
@@ -10,8 +12,8 @@ function createWindow () {
     }
   })
 
-  // e carrega o index.html do aplicativo.
-  win.loadFile('index.html')
+  // Carrega a página do Servidor Vue.js (webpack de desenvolvimento)
+  win.loadURL(selfHost);
 
   // Open the DevTools.
   win.webContents.openDevTools()

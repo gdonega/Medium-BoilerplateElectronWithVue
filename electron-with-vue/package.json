@@ -4,11 +4,32 @@
   "description": "A base Electron project using Vue.js",
   "main": "app.main.js",
   "scripts": {
-    "start": "electron ."
+    "dev-electron-start-app": "cross-env NODE_ENV=development electron .",
+    "dev-vue-start-server": "cross-env NODE_ENV=development webpack-dev-server --config ./app/config/vue/webpacks/dev.js",
+    "dev": "concurrently \"npm run dev-vue-start-server\" \"npm run dev-electron-start-app\" -k"
   },
   "author": "gdonega",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^8.2.5"
+    "@babel/core": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
+    "electron-debug": "^3.0.1",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "vue-html-loader": "^1.2.4",
+    "vue-loader": "^15.9.2",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "vue": "^2.6.11"
   }
 }
