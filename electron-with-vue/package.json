@@ -6,7 +6,34 @@
   "scripts": {
     "dev-electron-start-app": "cross-env NODE_ENV=development electron .",
     "dev-vue-start-server": "cross-env NODE_ENV=development webpack-dev-server --config ./app/config/vue/webpacks/dev.js",
-    "dev": "concurrently \"npm run dev-vue-start-server\" \"npm run dev-electron-start-app\" -k"
+    "dev": "concurrently \"npm run dev-vue-start-server\" \"npm run dev-electron-start-app\" -k",
+    "prod-vue-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./app/config/vue/webpacks/prod.js",
+    "prod-electron-build": "electron-builder",
+    "prod-electron-build-windows": "electron-builder --windows",
+    "prod-electron-build-windows-portable": "electron-builder --windows portable",
+    "prod-electron-build-app-windows": "npm run prod-vue-build && npm run prod-electron-build-windows",
+    "prod-electron-build-app-windows-portable": "npm run prod-vue-build && npm run prod-electron-build-windows-portable"
+  },
+  "build": {
+    "productName": "YourProductName",
+    "appId": "com.yourcompany",
+    "directories": {
+      "buildResources": "resources"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "snap",
+        "AppImage"
+      ]
+    }
   },
   "author": "gdonega",
   "license": "ISC",

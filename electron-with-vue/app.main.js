@@ -1,23 +1,54 @@
-const { app, BrowserWindow } = require('electron')
+// Depencias gerais
+const { app, protocol, BrowserWindow } = require('electron')
+const isDev = process.env.NODE_ENV === "development"; // Boolean gerado através da variavel de ambiente que define se o aplicativo está rodando como desenvolvimento ou produção
+
+// Dependencias do desenvolvimento
 const port = 40992; // Deve ser a mesma porta do Servidor Vue.js (webpack de desenvolvimento): no arquivo que está em app/config/vue/webpacks/dev.js (partindo da raiz do projeto)
 const selfHost = `http://localhost:${port}`;
 
+// Dependencias de produção
+const Protocol = require("./app/config/electron/protocol");
+
 function createWindow () {
+  // Caso estja em produção
+  // Registra um protocolo Handler que saberá pegar o arquivo da compilação do vue que será exibido
+  // (Precisa ocorrer antes de criar ou carregar a pagina do browser)
+  if (!isDev) protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler)
+  
   // Cria uma janela de navegação.
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: false // false, por questão de segurança
     }
   })
-
-  // Carrega a página do Servidor Vue.js (webpack de desenvolvimento)
-  win.loadURL(selfHost);
+  
+  // Caso estja em desenvolvimento
+  if (isDev) {
+    // Carrega a página do Servidor Vue.js (webpack de desenvolvimento)
+    win.loadURL(selfHost)
+  } else {
+    // Carrega o arquivo estático (Compilado do vuejs) através do protocolo
+    // Está sendo carregado o arquivo html do webpack Vue.js
+    win.loadURL(`${Protocol.scheme}://rse/index.html`)
+  }
 
   // Open the DevTools.
   win.webContents.openDevTools()
 }
+
+// Permite que o nosso scheme tenha acesso e carregue os arquivos necessários
+// E também ao armazenamento local, cookies, etc...
+// Precisa ser chamado antes do app estiver pronto (Ready)
+// (https://electronjs.org/docs/api/protocol#protocolregisterschemesasprivilegedcustomschemes)
+protocol.registerSchemesAsPrivileged([{
+  scheme: Protocol.scheme,
+  privileges: {
+    standard: true,
+    secure: true
+  }
+}])
 
 // Esse método será chamado quano o Electron terminar de
 // iniciar e estiver pronto para criar o broser window.

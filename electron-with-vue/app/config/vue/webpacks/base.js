@@ -4,7 +4,7 @@ module.exports = {
   target: "web", // O nosso aplicativo pode rodar sem o Electron
   entry: [path.join(__dirname, '../../../src/vue.main.js')], // O arquivo de entrada para a nossa aplicação; Esses pontos de entrada podem ser nomeados e também podemos ter vários deles, caso queira dividir o "webpack bundle" em arquivos menores para aumentar a velocidade de carregamento dos scripts entre as várias paginas do nosso app
   output: {
-    path: path.resolve(__dirname, "../../../../dist/webpack/vue"), // Onde todos os arquivos de saída do webpack serão colocados
+    path: path.resolve(__dirname, "../../../../buildOutputs/prodDependencies/webpacks/vue"), // Onde todos os arquivos de saída do webpack serão colocados
     filename: "bundle.js" // O nome do webpack bundle que será gerado
   },
   module: {

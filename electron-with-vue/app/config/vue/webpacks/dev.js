@@ -13,7 +13,7 @@ module.exports = merge(base, {
     port: "40992",
     hot: true, // Atualiza do servidor se houver alterações no código
     compress: true, // Comprime (gzip) arquivos que são servidos
-    contentBase: path.resolve(__dirname, "../../../../dist/webpack/vue"), // Local dos arquivos que o servidor serve
+    contentBase: path.resolve(__dirname, "../../../../buildOutputs/prodDependencies/webpacks/vue"), // Local dos arquivos que o servidor serve
     watchContentBase: true, // "Watch" o conteúdo base para mudanças
     watchOptions: {
       ignored: /node_modules/ // Ignora alterações no /node_modules/
