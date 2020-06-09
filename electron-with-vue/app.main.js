@@ -28,14 +28,14 @@ function createWindow () {
   if (isDev) {
     // Carrega a página do Servidor Vue.js (webpack de desenvolvimento)
     win.loadURL(selfHost)
+
+    // Open the DevTools.
+    win.webContents.openDevTools()
   } else {
     // Carrega o arquivo estático (Compilado do vuejs) através do protocolo
     // Está sendo carregado o arquivo html do webpack Vue.js
     win.loadURL(`${Protocol.scheme}://rse/index.html`)
   }
-
-  // Open the DevTools.
-  win.webContents.openDevTools()
 }
 
 // Permite que o nosso scheme tenha acesso e carregue os arquivos necessários
