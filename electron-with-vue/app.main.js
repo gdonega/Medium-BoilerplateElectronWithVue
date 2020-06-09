@@ -9,6 +9,19 @@ const selfHost = `http://localhost:${port}`;
 // Dependencias de produção
 const Protocol = require("./app/config/electron/protocol");
 
+/**
+ * Função que adicionar a aba de de debug
+ */
+const adicionarAbaDeDebug = () => {
+  require('electron-debug')({ showDevTools: true })
+  let installExtension = require('electron-devtools-installer')
+  
+  installExtension.default(installExtension.VUEJS_DEVTOOLS)
+    .then(() => {})
+    .catch(err => {})
+}
+
+
 function createWindow () {
   // Caso estja em produção
   // Registra um protocolo Handler que saberá pegar o arquivo da compilação do vue que será exibido
@@ -28,6 +41,14 @@ function createWindow () {
   if (isDev) {
     // Carrega a página do Servidor Vue.js (webpack de desenvolvimento)
     win.loadURL(selfHost)
+
+    // Caso seja MacOS já carrega a aba de debug 
+    // Caso seja outro sistema, carrega quando o app estiver "ready"
+    if (process.platform === 'win32') {
+      app.on('ready', () => adicionarAbaDeDebug())
+    } else {
+      adicionarAbaDeDebug()
+    }
 
     // Open the DevTools.
     win.webContents.openDevTools()
